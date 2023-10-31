@@ -1,77 +1,79 @@
 package Biblioteca;
-public class Item{
-    int ID = 0;
-    String titulo;
-    String autor;
-    int ano;
-    String tipo;
-    int quantidade;
 
-    public Item(int id, String Title, String Author, int Year, String Type, int Quantity){
-        this.ID = id;
-        this.titulo = Title;
-        this.autor = Author;
-        this.ano = Year;
-        this.tipo = Type;
-        this.quantidade = Quantity;
-    }
+public class Item {
+	int ID = 0;
+	String titulo;
+	String autor;
+	int ano;
+	String tipo;
+	int quantidade;
 
-    // Getters
-    public int getID(){
-        return this.ID;
-    }
+	public Item(int id, String Title, String Author, int Year, String Type, int Quantity) {
+		this.ID = id;
+		this.titulo = Title;
+		this.autor = Author;
+		this.ano = Year;
+		this.tipo = Type;
+		this.quantidade = Quantity;
+	}
 
-    public String getTitulo(){
-        return this.titulo;
-    }
+	// Getters
+	public int getID() {
+		return this.ID;
+	}
 
-    public String getAutor(){
-        return this.autor;
-    }
+	public String getTitulo() {
+		return this.titulo;
+	}
 
-    public int getAno(){
-        return this.ano;
-    }
+	public String getAutor() {
+		return this.autor;
+	}
 
-    public String getTipo(){
-        return this.tipo;
-    }
+	public int getAno() {
+		return this.ano;
+	}
 
-    public int getQuantidade(){
-        return this.quantidade;
-    }
+	public String getTipo() {
+		return this.tipo;
+	}
 
-    // Setters
+	public int getQuantidade() {
+		return this.quantidade;
+	}
 
-    public void setTitulo(String Title){
-        this.titulo = Title;
-    }
+	// Setters
 
-    public void setAutor(String Author){
-        this.autor = Author;
-    }
+	public void setTitulo(String Title) {
+		this.titulo = Title;
+	}
 
-    public void setAno(int Year){
-        this.ano = Year;
-    }
+	public void setAutor(String Author) {
+		this.autor = Author;
+	}
 
-    public void setTipo(String Type){
-        this.tipo = Type;
-    }
+	public void setAno(int Year) {
+		this.ano = Year;
+	}
 
-    public void setQuantidade(int Quantity){
-        this.quantidade = Quantity;
-    }
+	public void setTipo(String Type) {
+		this.tipo = Type;
+	}
 
-    public void addQuantidade(int Quantity){
-        this.quantidade += Quantity;
-    }
+	public void setQuantidade(int Quantity) {
+		this.quantidade = Quantity;
+	}
 
-    public void subQuantidade(int Quantity){
-        this.quantidade -= Quantity;
-    }
+	public void addQuantidade(int Quantity) {
+		this.quantidade += Quantity;
+	}
 
-    public void printItem(){
-        System.out.println("ID: " + this.ID + " Titulo: " + this.titulo + " Autor: " + this.autor + " Ano: " + this.ano + " Tipo: " + this.tipo + " Quantidade: " + this.quantidade);
-    }
+	public void subQuantidade(int Quantity) {
+		this.quantidade -= Quantity;
+	}
+
+	public void printItem() {
+		System.out.println("\nID: " + this.ID + ", Titulo: " + this.titulo + ", Autor: " + this.autor + ", Ano: " + this.ano
+				+ ", Tipo: " + this.tipo + ", Quantidade: " + this.quantidade);
+	}
 }
