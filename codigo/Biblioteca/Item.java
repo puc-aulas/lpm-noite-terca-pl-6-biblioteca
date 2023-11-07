@@ -13,7 +13,7 @@ public class Item {
 		this.titulo = Title;
 		this.autor = Author;
 		this.ano = Year;
-		this.tipo = Type;
+		this.tipo = Type.toUpperCase();
 		this.quantidade = Quantity;
 	}
 
