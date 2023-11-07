@@ -1,3 +1,3 @@
 # Instruções de uso
 
-Coloque neste arquivo qualquer instrução que julgar pertinente para a execução correta do sistema: arquivos de configuração, arquivos de dados, possíveis dados de teste etc.
+1. Execute o arquivo [proj3.java](../codigo/proj3.java) e o menu para teste irá aparecer (Os dados  são preenchidos automáticamente).

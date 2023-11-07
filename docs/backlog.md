@@ -13,11 +13,6 @@ Atualizado em 07/11/2023
 | 6. Requisito D funcionando   | Miguel ✔️       |
 | 7. Requisito E funcionando   | João Gabriel  ✔️      |
 ----
- a);
-31/10/2023: Implementação das classes modeladas e os requisitos b) e c) funcionando. Nesta
-entrega também deve haver um menu para a seleção do requisito desejado e testes unitários para
-métodos do requisito c);
-07/11/2023: Implementação dos requisitos d) e e);
 ## Tarefas pendentes (em ordem de prioridade)
 
 | Tarefa      | Responsável |
