@@ -3,11 +3,11 @@ package Biblioteca;
 public interface IPesquisavel {
 	public void listarTodos();
 
-	public void listarTitulo();
+	public void listarTitulo(String busca);
 
-	public void listarAutor();
+	public void listarAutor(String busca);
 
-	public void listarAno();
+	public void listarAno(int busca);
 
 	public void listarTipo();
 
