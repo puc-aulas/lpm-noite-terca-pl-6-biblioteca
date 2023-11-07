@@ -10,6 +10,7 @@ import Usuarios.Usuario;
 public class proj3 {
 	// public Tese(String Title, String Author, int Year, int Quantity)
 
+	private static Usuario user = new Usuario();
 	private static Biblioteca bib = new Biblioteca();
 	private static ControladorUser users = new ControladorUser();
 	private static Scanner in = new Scanner(System.in);
@@ -461,6 +462,7 @@ public class proj3 {
 			System.out.println("1-- Pegar livro emprestado");
 			System.out.println("2-- Pegar CD emprestado");
 			System.out.println("3-- Pegar DVD emprestado");
+			
 			System.out.println("0-- Voltar");
 			in.nextLine();
 			op = in.nextInt();
@@ -469,11 +471,13 @@ public class proj3 {
 				emprestarLivro();
 				break;
 			case 2:
-
+				emprestarCD();
 				break;
 			case 3:
-
+				
 				break;
+			case 4:
+				bib.listarEmprestimos();
 			case 0:
 
 				break;
@@ -485,37 +489,73 @@ public class proj3 {
 	}
 
 	public static void emprestarLivro() {
-		Usuario user = new Usuario();
 		bib.listarLivro();
 		int idLivro;
-		
 		do {
 			System.out.print("\nDigite o id do livro que deseja pegar: ");
 			idLivro = in.nextInt();
-		} while (bib.validaIdLivro(idLivro));
+		} while (!bib.validaIdLivro(idLivro));
 
-		if (bib.podeSerEmprestado(idLivro)) {
+		if (!bib.livroPodeSerEmprestado(idLivro)) {
 			System.out.println("O item não pode ser emprestado");
 			return;
 		}
-
-		users.listarUsers();
+		
 		int idUser;
-
+		users.listarUsers();
 		do {
 			System.out.print("Digite o id do usuário: ");
 			idUser = in.nextInt();
-		} while (users.vaidaId(idUser));
-
-		if (!users.podePegarEmprestado(idUser)) {
-			System.out.println("Usuário não pode pegar emprestimo!");
-			return;
+		} while (!users.vaidaId(idUser));
+		
+		if(validaUsuario(idUser)) {
+		bib.getSpecificItem(idLivro).printItem();
+		String nome = users.getNomeByID(idUser);
+		String obra = bib.getItenName(idLivro);
+		
+		user.pegarEmprestado(bib.getSpecificItem(idLivro));
+		bib.pegarLivroEmprestado(nome , obra,idLivro , idUser);
 		}
-
-		user.pegarEmprestado(idLivro, bib.pegarLivroEmprestado(idLivro));
-
+		
 	}
 
+	public static void emprestarCD() {
+		bib.listarCD();
+		int idCD;
+		do {
+			System.out.print("\nDigite o id do CD que deseja pegar: ");
+			idCD = in.nextInt();
+		} while (!bib.validaIdCD(idCD));
+		
+		if (!bib.CDPodeSerEmprestado(idCD)) {
+			System.out.println("O item não pode ser emprestado");
+			return;
+		}
+		
+		int idUser;
+		users.listarUsers();
+		do {
+			System.out.print("Digite o id do usuário: ");
+			idUser = in.nextInt();
+		} while (!users.vaidaId(idUser));
+		if(validaUsuario(idUser)) {
+			String nome = users.getNomeByID(idUser);
+			String obra = bib.getItenName(idCD);
+			bib.pegarCDEmprestado(nome,obra,idCD , idUser);
+			user.pegarEmprestado(bib.getSpecificItem(idCD));
+			}
+	}
+	
+	public static boolean validaUsuario(int idUser) {
+		
+		if (!users.podePegarEmprestado(idUser)) {
+			System.out.println("Usuário não pode pegar emprestimo!");
+			return false;
+		}
+		return true;
+	}
+	
+	
 	private static int userCounter = 1;
 
 	public static int genUserID() {
