@@ -66,4 +66,22 @@ public class ControladorUser {
 			System.out.println("Usuario não encontrado");
 		}
 	}
+
+	public boolean vaidaId(int idUser) {
+		for(Usuario a : users) {
+			if(a.getID() == idUser) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean podePegarEmprestado(int idUser) {
+		for(Usuario a : users) {
+			if(!(a.getContadorItens() >= 3)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
