@@ -47,6 +47,59 @@ public class Biblioteca implements IPesquisavel {
 	public Biblioteca() {
 	}
 
+	public Item pegarLivroEmprestado(int idEmp) {
+		for (Item a : Items) {
+			if (a.getID() == idEmp) {
+				a.subQuantidade(1);
+				return a;
+			}
+		}
+		return null;
+	}
+
+	public boolean podeSerEmprestado(int IdEmp) {
+		for (Item a : Items) {
+			if (a.getID() == IdEmp) {
+				if (a.getQuantidade() <= 1) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	public boolean validaIdLivro(int idEmp) {
+		for (Item a : Items) {
+			if (a.getID() == idEmp && a.getTipo().toUpperCase().equals("LIVRO")) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean validaIdDVD(int idEmp) {
+		for (Item a : Items) {
+			if (a.getID() == idEmp) {
+				if (a.getTipo().equals("DVD")) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean validaIdCd(int idEmp) {
+		for (Item a : Items) {
+			if (a.getID() == idEmp) {
+				if (a.getTipo().equals("CD")) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+
 	public void listarTodos() {
 		List<Item> Items = new ArrayList<>();
 
@@ -58,56 +111,77 @@ public class Biblioteca implements IPesquisavel {
 	}
 
 	// Ordenar os Items pelo titulo
-	public void listarTitulo() {
+	public void listarTitulo(String busca) {
 		List<Item> Items = new ArrayList<>();
 		Items = addTodos();
-		Collections.sort(Items, new Comparator<Item>() {
+		List<Item> result = new ArrayList<>();
+
+		for (Item a : Items) {
+			if (a.getTitulo().toUpperCase().contains(busca.toUpperCase())) {
+				result.add(a);
+			}
+		}
+
+		Collections.sort(result, new Comparator<Item>() {
 			@Override
 			public int compare(Item o1, Item o2) {
 				return o1.titulo.compareTo(o2.titulo);
 			}
 		});
 
-		for (int i = 0; i < Items.size(); i++) {
-			Items.get(i).printItem();
+		for (int i = 0; i < result.size(); i++) {
+			result.get(i).printItem();
 		}
 	}
 
 	// Ordenar os Items pelo Autor
 
-	public void listarAutor() {
+	public void listarAutor(String busca) {
 		List<Item> Items = new ArrayList<>();
-
 		Items = addTodos();
+		List<Item> result = new ArrayList<>();
 
-		Collections.sort(Items, new Comparator<Item>() {
+		for (Item a : Items) {
+			if (a.getAutor().toUpperCase().contains(busca.toUpperCase())) {
+				result.add(a);
+			}
+		}
+
+		Collections.sort(result, new Comparator<Item>() {
 			@Override
 			public int compare(Item o1, Item o2) {
-				return o1.autor.compareTo(o2.autor);
+				return o1.titulo.compareTo(o2.titulo);
 			}
 		});
 
-		for (int i = 0; i < Items.size(); i++) {
-			Items.get(i).printItem();
+		for (int i = 0; i < result.size(); i++) {
+			result.get(i).printItem();
 		}
 	}
 
 	// Ordenar os Items pelo Ano
 
-	public void listarAno() {
+	public void listarAno(int ano) {
 		List<Item> Items = new ArrayList<>();
 
 		Items = addTodos();
+		List<Item> result = new ArrayList<>();
 
-		Collections.sort(Items, new Comparator<Item>() {
+		for (Item a : Items) {
+			if (a.getAno() == ano) {
+				result.add(a);
+			}
+		}
+
+		Collections.sort(result, new Comparator<Item>() {
 			@Override
 			public int compare(Item o1, Item o2) {
-				return Integer.valueOf(o1.ano).compareTo(o2.ano);
+				return o1.titulo.compareTo(o2.titulo);
 			}
 		});
 
-		for (int i = 0; i < Items.size(); i++) {
-			Items.get(i).printItem();
+		for (int i = 0; i < result.size(); i++) {
+			result.get(i).printItem();
 		}
 	}
 
@@ -206,4 +280,3 @@ public class Biblioteca implements IPesquisavel {
 		return livros;
 	}
 }
-
