@@ -5,6 +5,7 @@ import java.util.Scanner;
 import Biblioteca.Biblioteca;
 import Biblioteca.Item;
 import Usuarios.ControladorUser;
+import Usuarios.Usuario;
 
 public class proj3 {
 	// public Tese(String Title, String Author, int Year, int Quantity)
@@ -27,39 +28,41 @@ public class proj3 {
 	private static void mostrarMenuPrincipal() {
 		System.out.println("\nMenu da Biblioteca");
 		System.out.println("Selecione uma das opções abaixo: \n");
-		System.out.println("1 -- Popular o Banco com os testes");
-		System.out.println("2 -- Visualizar todos os itens da biblioteca");
-		System.out.println("3 -- Listar itens em ordem");
-		System.out.println("4 -- Gerenciar usuários");
-		System.out.println("5 -- Editar itens cadastrados");
-		System.out.println("6 -- Empréstimos");
-		System.out.println("7 -- Devoluções");
+		System.out.println("1 -- Listar itens em ordem");
+		System.out.println("2 -- Gerenciar usuários");
+		System.out.println("3 -- Editar itens cadastrados");
+		System.out.println("4 -- Menu Empréstimos");
+		System.out.println("5 -- Menu Devoluções");
+		System.out.println("8 -- Visualizar todos os itens da biblioteca");
+		System.out.println("9 -- Popular o Banco com os testes");
 		System.out.println("0 -- Sair");
 	}
 
 	private static void processarEscolhaPrincipal(int escolha) {
 		switch (escolha) {
 		case 1:
-			AddTests(bib);
-			break;
-		case 2:
-			bib.listarTodos();
-			break;
-		case 3:
 			listarDadosOrdenados();
 			break;
-		case 4:
+		case 2:
 			gerenciarUsuarios();
 			break;
-		case 5:
+		case 3:
 			editarItens();
 			break;
-		case 6:
-		case 7:
+		case 4:
+			menuEmprestimos();
+			break;
+		case 5:
 			System.out.println("A ser implementado!");
 			break;
 		case 0:
 			System.out.println("Encerrando o sistema...");
+			break;
+		case 8:
+			bib.listarTodos();
+			break;
+		case 9:
+			AddTests(bib);
 			break;
 		default:
 			System.out.println("Opção inválida!");
@@ -69,30 +72,33 @@ public class proj3 {
 
 	private static void listarDadosOrdenados() {
 		int escolha;
+		String busca;
 		do {
-			System.out.println("De qual a forma que deseja ordenar?\n");
+			System.out.println("Oque deseja Buscar?\n");
 			System.out.println("1 -- Título");
 			System.out.println("2 -- Autor");
 			System.out.println("3 -- Ano");
-			System.out.println("4 -- Tipo");
-			System.out.println("5 -- Listar Itens de um somente tipo");
 			System.out.println("0 -- Voltar");
 			escolha = in.nextInt();
 			switch (escolha) {
 			case 1:
-				bib.listarTitulo();
+				in.nextLine();
+				busca = validaTituloDaObra();
+				System.out.println("Melhores resultados para a busca \"" + busca + "\"\n");
+				bib.listarTitulo(busca);
 				break;
 			case 2:
-				bib.listarAutor();
+				in.nextLine();
+				busca = validaAutorDaObra();
+				System.out.println("Melhores resultados para a busca \"" + busca + "\"\n");
+				bib.listarAutor(busca);
+				System.out.println();
 				break;
 			case 3:
-				bib.listarAno();
-				break;
-			case 4:
-				bib.listarTipo();
-				break;
-			case 5:
-				listarItensPorTipo();
+				in.nextLine();
+				int ano = validaAnoDaObra();
+				System.out.println("Obras do ano: \"" + ano + "\"\n");
+				bib.listarAno(ano);
 				break;
 			case 0:
 				return;
@@ -101,43 +107,6 @@ public class proj3 {
 				break;
 			}
 		} while (escolha != 0);
-	}
-
-	private static void listarItensPorTipo() {
-
-		int escolhaTipo;
-		do {
-			System.out.println("Qual o tipo que deseja listar?\n");
-			System.out.println("1 -- Tese");
-			System.out.println("2 -- Revista");
-			System.out.println("3 -- DVD");
-			System.out.println("4 -- CD");
-			System.out.println("5 -- Livro");
-			System.out.println("0 -- Voltar");
-			escolhaTipo = in.nextInt();
-			switch (escolhaTipo) {
-			case 1:
-				bib.listarTese();
-				break;
-			case 2:
-				bib.listarRevista();
-				break;
-			case 3:
-				bib.listarDVD();
-				break;
-			case 4:
-				bib.listarCD();
-				break;
-			case 5:
-				bib.listarLivro();
-				break;
-			case 0:
-				break;
-			default:
-				System.out.println("Opção inválida!");
-				break;
-			}
-		} while (escolhaTipo != 0);
 	}
 
 	private static void gerenciarUsuarios() {
@@ -286,104 +255,102 @@ public class proj3 {
 	}
 
 	private static void editarExemplaresCadastrados() {
-	    int op;
-	    do {
-	        System.out.println("\nSelecione o tipo de item para editar:");
-	        System.out.println("1 -- Tese");
-	        System.out.println("2 -- Revista");
-	        System.out.println("3 -- DVD");
-	        System.out.println("4 -- CD");
-	        System.out.println("5 -- Livro");
-	        System.out.println("0 -- Cancelar");
-	        op = in.nextInt();
-	        in.nextLine();  
+		int op;
+		do {
+			System.out.println("\nSelecione o tipo de item para editar:");
+			System.out.println("1 -- Tese");
+			System.out.println("2 -- Revista");
+			System.out.println("3 -- DVD");
+			System.out.println("4 -- CD");
+			System.out.println("5 -- Livro");
+			System.out.println("0 -- Cancelar");
+			op = in.nextInt();
+			in.nextLine();
 
-	        List<? extends Item> lista = null;
+			List<? extends Item> lista = null;
 
-	        switch (op) {
-	            case 1:
-	                lista = bib.getTeses();
-	                break;
-	            case 2:
-	                lista = bib.getRevistas();
-	                break;
-	            case 3:
-	                lista = bib.getDVDs();
-	                break;
-	            case 4:
-	                lista = bib.getCDs();
-	                break;
-	            case 5:
-	                lista = bib.getLivros();
-	                break;
-	            case 0:
-	                return; 
-	            default:
-	                System.out.println("Opção inválida!");
-	                break;
-	        }
+			switch (op) {
+			case 1:
+				lista = bib.getTeses();
+				break;
+			case 2:
+				lista = bib.getRevistas();
+				break;
+			case 3:
+				lista = bib.getDVDs();
+				break;
+			case 4:
+				lista = bib.getCDs();
+				break;
+			case 5:
+				lista = bib.getLivros();
+				break;
+			case 0:
+				return;
+			default:
+				System.out.println("Opção inválida!");
+				break;
+			}
 
-	        if (lista != null && !lista.isEmpty()) {
-	            for (Item item : lista) {
-	                item.printItem();
-	            }
+			if (lista != null && !lista.isEmpty()) {
+				for (Item item : lista) {
+					item.printItem();
+				}
 
-	            System.out.println("Digite o ID do item que deseja Editar:");
-	            int id = in.nextInt();
-	            in.nextLine();  
+				System.out.println("Digite o ID do item que deseja Editar:");
+				int id = in.nextInt();
+				in.nextLine();
 
-	            Item itemParaEditar = lista.stream().filter(item -> item.getID() == id).findFirst().orElse(null);
+				Item itemParaEditar = lista.stream().filter(item -> item.getID() == id).findFirst().orElse(null);
 
-	            if (itemParaEditar != null) {
-	                editarItem(itemParaEditar);
-	                op = 0;
-	            } else {
-	                System.out.println("ID não encontrado.");
-	            }
-	        } else {
-	            System.out.println("Não há itens cadastrados neste tipo.");
-	        }
+				if (itemParaEditar != null) {
+					editarItem(itemParaEditar);
+					op = 0;
+				} else {
+					System.out.println("ID não encontrado.");
+				}
+			} else {
+				System.out.println("Não há itens cadastrados neste tipo.");
+			}
 
-	    } while (op != 0);
+		} while (op != 0);
 	}
 
 	private static void editarItem(Item itemParaEditar) {
-	    System.out.println("Editando o item: ");
-	    itemParaEditar.printItem(); 
-	    System.out.println();
-	    
-	    System.out.println("Digite o novo título (ou deixe em branco para não alterar):");
-	    String titulo = in.nextLine();
-	    if (!titulo.trim().isEmpty()) {
-	        itemParaEditar.setTitulo(titulo);
-	    }
+		System.out.println("Editando o item: ");
+		itemParaEditar.printItem();
+		System.out.println();
 
-	    System.out.println("Digite o novo autor (ou deixe em branco para não alterar):");
-	    String autor = in.nextLine();
-	    if (!autor.trim().isEmpty()) {
-	        itemParaEditar.setAutor(autor);
-	    }
+		System.out.println("Digite o novo título (ou deixe em branco para não alterar):");
+		String titulo = in.nextLine();
+		if (!titulo.trim().isEmpty()) {
+			itemParaEditar.setTitulo(titulo);
+		}
 
-	    System.out.println("Digite o novo ano (ou digite 0 para não alterar):");
-	    int ano = in.nextInt();
-	    if (ano != 0) {
-	        itemParaEditar.setAno(ano);
-	    }
-	    in.nextLine(); 
+		System.out.println("Digite o novo autor (ou deixe em branco para não alterar):");
+		String autor = in.nextLine();
+		if (!autor.trim().isEmpty()) {
+			itemParaEditar.setAutor(autor);
+		}
 
-	    System.out.println("Digite a nova quantidade (ou digite 0 para não alterar):");
-	    int quantidade = in.nextInt();
-	    if (quantidade != 0) {
-	        itemParaEditar.setQuantidade(quantidade);
-	    }
-	    System.out.println("Editado com sucesso!\n");
-	    itemParaEditar.printItem();
-	    System.out.println();
-	    in.nextLine();
+		System.out.println("Digite o novo ano (ou digite 0 para não alterar):");
+		int ano = in.nextInt();
+		if (ano != 0) {
+			itemParaEditar.setAno(ano);
+		}
+		in.nextLine();
+
+		System.out.println("Digite a nova quantidade (ou digite 0 para não alterar):");
+		int quantidade = in.nextInt();
+		if (quantidade != 0) {
+			itemParaEditar.setQuantidade(quantidade);
+		}
+		System.out.println("Editado com sucesso!\n");
+		itemParaEditar.printItem();
+		System.out.println();
+		in.nextLine();
 	}
-	  
-	
-	
+
 	private static void excluirExemplarCadastrado() {
 		int op;
 		do {
@@ -395,7 +362,7 @@ public class proj3 {
 			System.out.println("5 -- Livro");
 			System.out.println("0 -- Cancelar");
 			op = in.nextInt();
-			in.nextLine(); 
+			in.nextLine();
 
 			List<? extends Item> lista = null;
 			boolean itemRemovido = false;
@@ -423,43 +390,43 @@ public class proj3 {
 				break;
 			}
 			if (lista != null) {
-	            if (lista.isEmpty()) {
-	                System.out.println("Não há itens cadastrados neste tipo.");
-	                break;
-	            }
+				if (lista.isEmpty()) {
+					System.out.println("Não há itens cadastrados neste tipo.");
+					break;
+				}
 
-	            for (Item item : lista) {
-	                item.printItem();
-	            }
+				for (Item item : lista) {
+					item.printItem();
+				}
 
-	            System.out.println("Digite o ID do item que deseja excluir:");
-	            int id = in.nextInt();
-	            in.nextLine(); 
+				System.out.println("Digite o ID do item que deseja excluir:");
+				int id = in.nextInt();
+				in.nextLine();
 
-	            Item itemParaRemover = lista.stream().filter(item -> item.getID() == id).findFirst().orElse(null);
+				Item itemParaRemover = lista.stream().filter(item -> item.getID() == id).findFirst().orElse(null);
 
-	            if (itemParaRemover != null) {
-	                itemParaRemover.printItem();
-	                System.out.println("Tem certeza de que deseja excluir este item? (sim/nao)");
-	                String resposta = in.nextLine();
+				if (itemParaRemover != null) {
+					itemParaRemover.printItem();
+					System.out.println("Tem certeza de que deseja excluir este item? (sim/nao)");
+					String resposta = in.nextLine();
 
-	                if (resposta.equalsIgnoreCase("sim")) {
-	                    lista.remove(itemParaRemover);
-	                    System.out.println("Item excluído com sucesso.");
-	                    itemRemovido = true;
-	                } else {
-	                    System.out.println("Ação de exclusão cancelada.");
-	                }
-	            } else {
-	                System.out.println("ID não encontrado.");
-	            }
-	        }
+					if (resposta.equalsIgnoreCase("sim")) {
+						lista.remove(itemParaRemover);
+						System.out.println("Item excluído com sucesso.");
+						itemRemovido = true;
+					} else {
+						System.out.println("Ação de exclusão cancelada.");
+					}
+				} else {
+					System.out.println("ID não encontrado.");
+				}
+			}
 
-	        if (itemRemovido) {
-	            break; 
-	        }
+			if (itemRemovido) {
+				break;
+			}
 
-	    } while (op != 0);
+		} while (op != 0);
 	}
 
 	public static Biblioteca AddTests(Biblioteca bib) {
@@ -479,11 +446,74 @@ public class proj3 {
 		bib.addCD(genID(), "Espelhos Distantes", "Jay-A", 1996, 2);
 		bib.addCD(genID(), "O Rio do Esquecimento", "Charlie Brown Sr.", 2000, 6);
 
-		bib.addLivro(genID(), "Horizontes Perdidos", "Loki", 1552, 10);
-		bib.addLivro(genID(), "O Voo da Serpente", "Odin", 1358, 5);
+		bib.addLivro(genID(), "Horizontes Perdidos", "Loki", 1552, 3);
+		bib.addLivro(genID(), "O Voo da Serpente", "Odin", 1358, 3);
 		bib.addLivro(genID(), "Véus do Amanhecer", "Thor", 859, 1);
 
 		return bib;
+	}
+
+	public static void menuEmprestimos() {
+		int op;
+
+		do {
+			System.out.println("---- Menu de Emprestimos -----");
+			System.out.println("1-- Pegar livro emprestado");
+			System.out.println("2-- Pegar CD emprestado");
+			System.out.println("3-- Pegar DVD emprestado");
+			System.out.println("0-- Voltar");
+			in.nextLine();
+			op = in.nextInt();
+			switch (op) {
+			case 1:
+				emprestarLivro();
+				break;
+			case 2:
+
+				break;
+			case 3:
+
+				break;
+			case 0:
+
+				break;
+			default:
+				System.out.println("Opção Invalida!");
+				break;
+			}
+		} while (op != 0);
+	}
+
+	public static void emprestarLivro() {
+		Usuario user = new Usuario();
+		bib.listarLivro();
+		int idLivro;
+		
+		do {
+			System.out.print("\nDigite o id do livro que deseja pegar: ");
+			idLivro = in.nextInt();
+		} while (bib.validaIdLivro(idLivro));
+
+		if (bib.podeSerEmprestado(idLivro)) {
+			System.out.println("O item não pode ser emprestado");
+			return;
+		}
+
+		users.listarUsers();
+		int idUser;
+
+		do {
+			System.out.print("Digite o id do usuário: ");
+			idUser = in.nextInt();
+		} while (users.vaidaId(idUser));
+
+		if (!users.podePegarEmprestado(idUser)) {
+			System.out.println("Usuário não pode pegar emprestimo!");
+			return;
+		}
+
+		user.pegarEmprestado(idLivro, bib.pegarLivroEmprestado(idLivro));
+
 	}
 
 	private static int userCounter = 1;
