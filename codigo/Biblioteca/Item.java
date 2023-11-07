@@ -17,6 +17,13 @@ public class Item {
 		this.quantidade = Quantity;
 	}
 
+	public void emprestarIten() {
+		
+	}
+	
+	
+	
+	
 	// Getters
 	public int getID() {
 		return this.ID;
