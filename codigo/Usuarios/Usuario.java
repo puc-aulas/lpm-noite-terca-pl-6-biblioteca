@@ -78,7 +78,11 @@ public class Usuario implements IUsuario {
 
 	public void pegarEmprestado(int ID, Item item) {
 		this.itensEmprestados[this.contadorItens] = item;
-		this.contadorItens++;
+		contEmp();
+	}
+	
+	private void contEmp() {
+		this.contadorItens ++;
 	}
 
 	public void devolver(int ID, Item item) {
