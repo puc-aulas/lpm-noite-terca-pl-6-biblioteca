@@ -1,15 +1,13 @@
 package Biblioteca;
 
 public class Item {
-	int ID = 0;
 	String titulo;
 	String autor;
 	int ano;
 	String tipo;
 	int quantidade;
 
-	public Item(int id, String Title, String Author, int Year, String Type, int Quantity) {
-		this.ID = id;
+	public Item(String Title, String Author, int Year, String Type, int Quantity) {
 		this.titulo = Title;
 		this.autor = Author;
 		this.ano = Year;
@@ -18,16 +16,10 @@ public class Item {
 	}
 
 	public void emprestarIten() {
-		
+	
 	}
-	
-	
-	
-	
+
 	// Getters
-	public int getID() {
-		return this.ID;
-	}
 
 	public String getTitulo() {
 		return this.titulo;
@@ -80,7 +72,7 @@ public class Item {
 	}
 
 	public void printItem() {
-		System.out.println("\nID: " + this.ID + ", Titulo: " + this.titulo + ", Autor: " + this.autor + ", Ano: " + this.ano
+		System.out.println("Titulo: " + this.titulo + ", Autor: " + this.autor + ", Ano: " + this.ano
 				+ ", Tipo: " + this.tipo + ", Quantidade: " + this.quantidade);
 	}
 }

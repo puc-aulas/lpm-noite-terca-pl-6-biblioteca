@@ -4,165 +4,63 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Scanner;
 
-public class Biblioteca implements IPesquisavel {
+public class Biblioteca {
+    List<Item> itens = new ArrayList<Item>();
 
-	List<Tese> teses = new ArrayList<>();
-	List<Revista> revistas = new ArrayList<>();
-	List<DVD> DVDs = new ArrayList<>();
-	List<CD> CDs = new ArrayList<>();
-	List<Livro> livros = new ArrayList<>();
-	List<Item> Items = new ArrayList<>();
-	List<Emprestimo> emprestimos = new ArrayList<>();
 
-	public void addTeses(int id, String Title, String Author, int Year, int Quantity) {
-		getTeses().add(new Tese(id, Title, Author, Year, Quantity));
+    public int getSize(){
+        return itens.size();
+    }
+
+    public Item pegarEmprestado(int i){
+        Item item = itens.get(i);
+		item.subQuantidade(1);
+		System.out.println("Quantidade: " + item.getQuantidade());
+        return item;
+    }
+
+    public void addTeses(String Title, String Author, int Year, int Quantity) {
+        itens.add(new Tese(Title, Author, Year, Quantity));
 		System.out.println("\nTese cadastrada com sucesso!");
 	}
 
-	public void addRevista(int id, String Title, String Author, int Year, int Quantity) {
-		getRevistas().add(new Revista(id, Title, Author, Year, Quantity));
+	public void addRevista(String Title, String Author, int Year, int Quantity) {
+		itens.add(new Revista(Title, Author, Year, Quantity));
 		System.out.println("\nRevista cadastrada com sucesso");
 	}
 
-	public void addDVD(int id, String Title, String Author, int Year, int Quantity) {
-		getDVDs().add(new DVD(id, Title, Author, Year, Quantity, 0));
+	public void addDVD(String Title, String Author, int Year, int Quantity) {
+		itens.add(new DVD(Title, Author, Year, Quantity, 0));
 		System.out.println("\nDVD cadastrado com sucesso");
 	}
 
-	public void addCD(int id, String Title, String Author, int Year, int Quantity) {
-		CD novoCD = new CD(id,Title,Author,Year,Quantity,0);
-		getCDs().add(novoCD);
-		Items.add(novoCD); 
+	public void addCD(String Title, String Author, int Year, int Quantity) {
+        itens.add(new CD(Title, Author, Year, Quantity, 0));
 		System.out.println("\nCD Cadastrado com Sucesso!");
 	}
 
-	public void addLivro(int id, String Titulo, String Author, int Year, int Quantity) {
-	    Livro novoLivro = new Livro(id, Titulo, Author, Year, Quantity, 0);
-	    getLivros().add(novoLivro);
-	    Items.add(novoLivro); 
+	public void addLivro(String Titulo, String Author, int Year, int Quantity) {
+        itens.add(new Livro(Titulo, Author, Year, Quantity, 0));
 	    System.out.println("\nLivro Cadastrado com Sucesso!");
 	}
 
-	public Biblioteca() {
-	}
-	
-	public Item getSpecificItem(int itemId) {
-	    for (Item item : Items) { 
-	        if (item.getID() == itemId) {
-	            return item;
-	        }
-	    }
-	    return null;
-	}
-	
-	private void addEmprestimo(String nome, String obra,int idLivro , int userID) {
-		if(emprestimos.isEmpty()) {
-			emprestimos.add(new Emprestimo(nome, obra,idLivro,userID));
-			return;
-		}
-		getEmprestimos().add(new Emprestimo(nome, obra,idLivro,userID));
+    public void listarItems(){
+        for(int i = 0; i < itens.size(); i++){
+            System.out.print("ID: " + i + ", ");
+            itens.get(i).printItem();
+        }
+    }
+
+	public Item get(int index){
+		return itens.get(index);
 	}
 
-	public void pegarLivroEmprestado(String nome, String obra ,int idLivro, int userID) {
-		for (Livro a : livros) {
-			if (a.getID() == idLivro) {
-				a.subQuantidade(1);
-				addEmprestimo(nome, obra,idLivro, userID);
-		}
-		}
-	}
-
-	public String getItenName(int id) {
-		for(Item a:Items) {
-			if(a.getID() == id) {
-				return a.getTitulo();
-			}
-		}
-		return null;
-	}
-	
-	public boolean livroPodeSerEmprestado(int idLivro) {
-		for (Livro a : livros) {
-			if (a.getID() == idLivro) {
-				if (1 < a.getQuantidade()) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	public boolean validaIdLivro(int idEmp) {
-		for (Livro a : livros) {
-			if (a.getID() == idEmp) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public void pegarDVDEmprestado(String nome, String obra ,int idDVD, int userID) {
-		for (DVD a : DVDs) {
-			if (a.getID() == idDVD) {
-				a.subQuantidade(1);
-				addEmprestimo(nome, obra, idDVD, userID);
-		}
-		}
-	}
-	
-	public boolean validaIdDVD(int idDVD) {
-		for (DVD a : DVDs) {
-			if (a.getID() == idDVD) {		
-					return true;
-			}
-		}
-		return false;
-	}
-
-	public void pegarCDEmprestado(String nome, String obra ,int idCD, int userID) {
-		for (CD a : CDs) {
-			if (a.getID() == idCD) {
-				a.subQuantidade(1);
-				addEmprestimo(nome, obra, idCD, userID);
-		}
-		}
-	}
-	
-	public boolean validaIdCD(int idCD) {
-		for (CD a : CDs) {
-			if (a.getID() == idCD) {
-					return true;
-			}
-		}
-		return false;
-	}
-
-	public boolean CDPodeSerEmprestado(int idCD) {
-		for (CD a : CDs) {
-			if (a.getID() == idCD) {
-				if (1 < a.getQuantidade()) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-	
-	public void listarTodos() {
-		List<Item> Items = new ArrayList<>();
-
-		Items = addTodos();
-
-		for (int i = 0; i < Items.size(); i++) {
-			Items.get(i).printItem();
-		}
-	}
-
-	// Ordenar os Items pelo titulo
+    // Ordenar os Items pelo titulo
 	public void listarTitulo(String busca) {
 		List<Item> Items = new ArrayList<>();
-		Items = addTodos();
+		Items = itens;
 		List<Item> result = new ArrayList<>();
 
 		for (Item a : Items) {
@@ -183,11 +81,9 @@ public class Biblioteca implements IPesquisavel {
 		}
 	}
 
-	// Ordenar os Items pelo Autor
-
-	public void listarAutor(String busca) {
+    public void listarAutor(String busca) {
 		List<Item> Items = new ArrayList<>();
-		Items = addTodos();
+		Items = itens;
 		List<Item> result = new ArrayList<>();
 
 		for (Item a : Items) {
@@ -208,12 +104,11 @@ public class Biblioteca implements IPesquisavel {
 		}
 	}
 
-	// Ordenar os Items pelo Ano
-
+    // Ordenar os Items pelo Ano
 	public void listarAno(int ano) {
 		List<Item> Items = new ArrayList<>();
 
-		Items = addTodos();
+		Items = itens;
 		List<Item> result = new ArrayList<>();
 
 		for (Item a : Items) {
@@ -233,18 +128,12 @@ public class Biblioteca implements IPesquisavel {
 			result.get(i).printItem();
 		}
 	}
-	
-	public void listarEmprestimos() {
-		for(Emprestimo a: emprestimos) {
-			a.printItem();
-		}
-	}
-	
-	// Ordenar os Items pelo Tipo
+
+    // Ordenar os Items pelo Tipo
 	public void listarTipo() {
 		List<Item> Items = new ArrayList<>();
 
-		Items = addTodos();
+		Items = itens;
 
 		Collections.sort(Items, new Comparator<Item>() {
 			@Override
@@ -258,86 +147,125 @@ public class Biblioteca implements IPesquisavel {
 		}
 	}
 
-	// Listar somente Teses
-	public void listarTese() {
-		for (int i = 0; i < getTeses().size(); i++) {
-			getTeses().get(i).printItem();
+    public void listarEmprestavel(){
+        for(int i = 0; i < itens.size(); i++){
+            if(itens.get(i) instanceof DVD){
+                System.out.print("ID: " + i + ", ");
+                itens.get(i).printItem();
+            }else if(itens.get(i) instanceof CD){
+                System.out.print("ID: " + i + ", ");
+                itens.get(i).printItem();
+            }else if(itens.get(i) instanceof Livro){
+                System.out.print("ID: " + i + ", ");
+                itens.get(i).printItem();
+            }
+        }
+    }
+
+    public int emprestavel(int i){
+        if(itens.get(i).getQuantidade() > 1){
+            if(itens.get(i) instanceof DVD){
+                return 1;
+            }else if(itens.get(i) instanceof CD){
+                return 1;
+            }else if(itens.get(i) instanceof Livro){
+                return 1;
+            }
+        }
+        return 0;
+    }
+
+    public void devolverItem(int i){
+        itens.get(i).setQuantidade(itens.get(i).getQuantidade() + 1);
+    }
+
+	public void editarItem(int id){
+		Scanner in = new Scanner(System.in);
+
+		if(itens.get(id) instanceof DVD){
+			System.out.println("Digite o Titulo do DVD: ");
+			String titulo = in.nextLine();
+
+			System.out.println("Digite o autor do DVD: ");
+			String autor = in.nextLine();
+
+			System.out.println("Digite o ano que o DVD lançou: ");
+			int ano = in.nextInt();
+
+			System.out.println("Digite a quantidade de DVDs: ");
+			int quantidade = in.nextInt();
+
+			DVD item = (DVD) itens.get(id);
+			DVD dvd = new DVD(titulo, autor, ano, quantidade, item.getEmprestado());
+
+			itens.set(id, dvd);
+		}else if(itens.get(id) instanceof CD){
+			System.out.println("Digite o Titulo do CD: ");
+			String titulo = in.nextLine();
+
+			System.out.println("Digite o autor do CD: ");
+			String autor = in.nextLine();
+
+			System.out.println("Digite o ano que o CD lançou: ");
+			int ano = in.nextInt();
+
+			System.out.println("Digite a quantidade de CDs: ");
+			int quantidade = in.nextInt();
+
+			CD item = (CD) itens.get(id);
+			CD cd = new CD(titulo, autor, ano, quantidade, item.getEmprestado());
+
+
+			itens.set(id, cd);
+		}else if(itens.get(id) instanceof Livro){
+			System.out.println("Digite o Titulo do Livro: ");
+			String titulo = in.nextLine();
+
+			System.out.println("Digite o autor do Livro: ");
+			String autor = in.nextLine();
+
+			System.out.println("Digite o ano que o Livro lançou: ");
+			int ano = in.nextInt();
+
+			System.out.println("Digite a quantidade de Livros: ");
+			int quantidade = in.nextInt();
+
+			Livro item = (Livro) itens.get(id);
+			Livro Livro = new Livro(titulo, autor, ano, quantidade, item.getEmprestado());
+
+			itens.set(id, Livro);
 		}
-	}
+		else if(itens.get(id) instanceof Tese){
+			System.out.println("Digite o Titulo do Tese: ");
+			String titulo = in.nextLine();
 
-	// Listar somente Revistas
-	public void listarRevista() {
-		for (int i = 0; i < getRevistas().size(); i++) {
-			getRevistas().get(i).printItem();
+			System.out.println("Digite o autor do Tese: ");
+			String autor = in.nextLine();
+
+			System.out.println("Digite o ano que o Tese lançou: ");
+			int ano = in.nextInt();
+
+			System.out.println("Digite a quantidade de Tese: ");
+			int quantidade = in.nextInt();
+
+			Tese Tese = new Tese(titulo, autor, ano, quantidade);
+			itens.set(id, Tese);
 		}
-	}
+		else if(itens.get(id) instanceof Revista){
+			System.out.println("Digite o Titulo do Revista: ");
+			String titulo = in.nextLine();
 
-	// Listar somente DVDs
-	public void listarDVD() {
-		for (int i = 0; i < getDVDs().size(); i++) {
-			getDVDs().get(i).printItem();
+			System.out.println("Digite o autor do Revista: ");
+			String autor = in.nextLine();
+
+			System.out.println("Digite o ano que o Revista lançou: ");
+			int ano = in.nextInt();
+
+			System.out.println("Digite a quantidade de Revistas: ");
+			int quantidade = in.nextInt();
+
+			Revista Revista = new Revista(titulo, autor, ano, quantidade);
+			itens.set(id, Revista);
 		}
-	}
-
-	// Listar somente CDs
-	public void listarCD() {
-		for (int i = 0; i < getCDs().size(); i++) {
-			getCDs().get(i).printItem();
-		}
-	}
-
-	// Listar somente Livros
-	public void listarLivro() {
-		for (int i = 0; i < getLivros().size(); i++) {
-			getLivros().get(i).printItem();
-		}
-	}
-
-	public List<Item> addTodos() {
-		List<Item> Items = new ArrayList<>();
-
-		for (int i = 0; i < getTeses().size(); i++) {
-			Items.add(getTeses().get(i));
-		}
-		for (int i = 0; i < getRevistas().size(); i++) {
-			Items.add(getRevistas().get(i));
-		}
-		for (int i = 0; i < getDVDs().size(); i++) {
-			Items.add(getDVDs().get(i));
-		}
-		for (int i = 0; i < getCDs().size(); i++) {
-			Items.add(getCDs().get(i));
-		}
-		for (int i = 0; i < getLivros().size(); i++) {
-			Items.add(getLivros().get(i));
-		}
-
-		return Items;
-	}
-
-	public List<Tese> getTeses() {
-		return teses;
-	}
-
-	public List<Revista> getRevistas() {
-		return revistas;
-	}
-
-	public List<DVD> getDVDs() {
-		return DVDs;
-	}
-
-	public List<CD> getCDs() {
-		return CDs;
-	}
-	
-	
-	
-	public List<Livro> getLivros() {
-		return livros;
-	}
-	
-	public List<Emprestimo> getEmprestimos(){
-		return emprestimos;
 	}
 }
