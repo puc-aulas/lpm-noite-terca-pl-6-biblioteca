@@ -1,12 +1,12 @@
-package Biblioteca;
+package biblioteca;
 
 import java.util.*;
 
 public class RelatorioEmprestimo{
-    List<Item> relatorio;
+    final List<Item> relatorio;
 
     public RelatorioEmprestimo(){
-        relatorio = new ArrayList<>();;
+        relatorio = new ArrayList<>();
     }
 
     public void addItem(Item item){
@@ -27,7 +27,7 @@ public class RelatorioEmprestimo{
     }
 
     public void printRelatorio(){
-        if(relatorio.size() == 0) System.out.println("Relatorio Vazio");
+        if(relatorio.isEmpty()) System.out.println("Relatorio Vazio");
         for(int i = 0; i < relatorio.size(); i++){
             System.out.print("ID: " + i + ", ");
             this.relatorio.get(i).printItem();

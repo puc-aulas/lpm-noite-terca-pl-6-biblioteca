@@ -1,10 +1,10 @@
-package Usuario;
+package usuario;
 
 import java.time.LocalDate ;
 import java.util.ArrayList;
 import java.util.List;
 
-import Biblioteca.Item;
+import biblioteca.Item;
 
 
 public class Usuario implements IUsuario{
@@ -75,12 +75,10 @@ public class Usuario implements IUsuario{
     public void printUsuario() {
         System.out.println("Nome: " + this.nome + ", Quantidade de itens emprestados: " + this.contadorItens);
         System.out.println("Itens Emprestados: ");
-        if (this.itensEmprestados.size() == 0) {
+        if (this.itensEmprestados.isEmpty()) {
             System.out.println("Nenhum item emprestado");
         } else {
-            this.itensEmprestados.forEach((item) -> {
-                item.printEmprestimo();
-            });
+            this.itensEmprestados.forEach(Emprestimo::printEmprestimo);
         }
     }
 
@@ -94,8 +92,8 @@ public class Usuario implements IUsuario{
     //Verifica se tem algum item em atraso
     public boolean verificarAtraso() {
         LocalDate now = LocalDate.now();
-        for (int i = 0; i < this.itensEmprestados.size(); i++) {
-            LocalDate dataEmprestimo = this.itensEmprestados.get(i).getDataEmprestimo();
+        for (Emprestimo itensEmprestado : this.itensEmprestados) {
+            LocalDate dataEmprestimo = itensEmprestado.getDataEmprestimo();
             if (dataEmprestimo.plusDays(10).isBefore(now)) {
                 return false; // Existe item em atraso
             }
@@ -103,7 +101,4 @@ public class Usuario implements IUsuario{
         return true; // Nenhum item está em atraso
     }
 
-    public boolean contains(Item item) {
-        return false;
-    }
 }

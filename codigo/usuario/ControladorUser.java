@@ -1,14 +1,13 @@
-package Usuario;
+package usuario;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import Biblioteca.Item;
-import Biblioteca.RelatorioEmprestimo;
+import biblioteca.Item;
 
 public class ControladorUser {
-    List<Usuario> users;
+    final List<Usuario> users;
 
     public ControladorUser() {
 		users = new ArrayList<>();
@@ -62,7 +61,7 @@ public class ControladorUser {
         }
     }
 
-    public int devolverItem(int idUser, int idItem, RelatorioEmprestimo rel){
+    public int devolverItem(int idUser, int idItem){
         int id = users.get(idUser).getItensEmprestados().get(idItem).getIdItem();
         users.get(idUser).getItensEmprestados().remove(idItem);
         users.get(idUser).setContadorItens(users.get(idUser).getContadorItens() - 1);
@@ -73,7 +72,7 @@ public class ControladorUser {
     public void removeUser() {
         Scanner in = new Scanner(System.in);
 
-        if(users.size() == 0){
+        if(users.isEmpty()){
             System.out.println("Não há usuários cadastrados!");
             return;
         }
@@ -92,7 +91,7 @@ public class ControladorUser {
     public void atualizarUsuario(){
         Scanner in = new Scanner(System.in);
 
-        if(users.size() == 0){
+        if(users.isEmpty()){
             System.out.println("Não há usuários cadastrados!");
             return;
         }
@@ -115,8 +114,8 @@ public class ControladorUser {
 
         List<Emprestimo> items2 = users.get(id).getItensEmprestados();
 
-        for (int i = 0; i < items2.size(); i++) {
-            if(items2.get(i).getItem() == item){
+        for (Emprestimo emprestimo : items2) {
+            if (emprestimo.getItem() == item) {
                 System.out.println("Já tem esse item emprestado!");
                 return false;
             }

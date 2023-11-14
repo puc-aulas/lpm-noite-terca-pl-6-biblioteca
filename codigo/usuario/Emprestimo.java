@@ -1,6 +1,6 @@
-package Usuario;
+package usuario;
 
-import Biblioteca.Item;
+import biblioteca.Item;
 import java.time.LocalDate;
 
 public class Emprestimo {

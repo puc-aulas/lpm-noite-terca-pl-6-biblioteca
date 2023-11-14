@@ -1,4 +1,4 @@
-package Biblioteca;
+package biblioteca;
 
 public class Item {
 	String titulo;
@@ -15,9 +15,6 @@ public class Item {
 		this.quantidade = Quantity;
 	}
 
-	public void emprestarIten() {
-	
-	}
 
 	// Getters
 

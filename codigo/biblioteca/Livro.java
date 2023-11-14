@@ -1,7 +1,7 @@
-package Biblioteca;
+package biblioteca;
 
 public class Livro extends Item {
-	int vezesEmprestado;
+	final int vezesEmprestado;
 
 	public Livro(String Title, String Author, int Year, int Quantity, int Emprestado) {
 		super(Title, Author, Year, "Livro", Quantity);
