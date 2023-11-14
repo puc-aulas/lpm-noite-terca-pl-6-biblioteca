@@ -1,4 +1,4 @@
-# Sistema de Gerenciamento de biblioteca
+# Sistema de Gerenciamento de Biblioteca 2.0
 
 ## Descrição
 Este projeto é um sistema de gerenciamento de biblioteca construído em Java. Ele permite gerenciar usuários, itens da biblioteca como livros, teses, revistas, CDs e DVDs, e realizar operações como empréstimos e devoluções.
@@ -16,7 +16,7 @@ Este projeto é um sistema de gerenciamento de biblioteca construído em Java. E
 ### Interface Pesquisável
 - Oferece métodos para realizar pesquisas no catálogo da biblioteca.
 
-### Classe biblioteca
+### Classe Biblioteca
 - Centraliza as operações e gerenciamento de usuários e itens.
 - Implementa a interface Pesquisável para fornecer funcionalidades de pesquisa.
 

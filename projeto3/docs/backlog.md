@@ -1,5 +1,5 @@
 # Backlog do projeto Sistema de Gerenciamento de biblioteca do Grupo 6
-Atualizado em 07/11/2023
+Atualizado em 14/11/2023
 
 ## Tarefas terminadas
 
@@ -12,10 +12,10 @@ Atualizado em 07/11/2023
 | 5. Menu para selação do requisito desejado  | Ryan  ✔️       |
 | 6. Requisito D funcionando   | Miguel ✔️       |
 | 7. Requisito E funcionando   | João Gabriel  ✔️      |
+| 8.  Github atualizado e diagrama de classes  | João Paulo ✔️     |
+
 ----
 ## Tarefas pendentes (em ordem de prioridade)
 
 | Tarefa      | Responsável |
 | ----------- | ----------- |
-| 1. Testes Unitários      | João Paulo     |
-| 2.  Github atualizado e diagrama de classes  | João Paulo      |
