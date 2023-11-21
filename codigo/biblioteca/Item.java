@@ -6,13 +6,15 @@ public class Item {
 	int ano;
 	String tipo;
 	int quantidade;
+	int categoria;
 
-	public Item(String Title, String Author, int Year, String Type, int Quantity) {
+	public Item(String Title, String Author, int Year, String Type, int Quantity, int categoria) {
 		this.titulo = Title;
 		this.autor = Author;
 		this.ano = Year;
 		this.tipo = Type.toUpperCase();
 		this.quantidade = Quantity;
+		this.categoria = categoria;
 	}
 
 
@@ -36,6 +38,10 @@ public class Item {
 
 	public int getQuantidade() {
 		return this.quantidade;
+	}
+
+	public int getCategoria(){
+		return this.categoria;
 	}
 
 	// Setters
@@ -68,8 +74,29 @@ public class Item {
 		this.quantidade -= Quantity;
 	}
 
+	public void setCategoria(int categoria){
+		this.categoria = categoria;
+	}
+
 	public void printItem() {
 		System.out.println("Titulo: " + this.titulo + ", Autor: " + this.autor + ", Ano: " + this.ano
-				+ ", Tipo: " + this.tipo + ", Quantidade: " + this.quantidade);
+				+ ", Tipo: " + this.tipo + ", Quantidade: " + this.quantidade + ", Categoria: " + CategoriaName(this.categoria));
+	}
+
+	public String CategoriaName(int id){
+		switch(id){
+			case 1:
+				return "Engenharia";
+			case 2: 
+				return "Software";
+			case 3:
+				return "Matemática";
+			case 4:
+				return "Física";
+			case 5:
+				return "Medicina";
+			default:
+				return "Outros";
+		}
 	}
 }

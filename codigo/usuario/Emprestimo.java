@@ -9,9 +9,7 @@ public class Emprestimo {
     int idItem;
 
     //Construtor vazio
-    public Emprestimo() {
-
-    }
+    public Emprestimo() {}
 
     //Construtor
     public Emprestimo(LocalDate dataEmprestimo, Item item, int id) {

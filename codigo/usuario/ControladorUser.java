@@ -17,8 +17,8 @@ public class ControladorUser {
         return users.size();
     }
 
-	public void cadastrarUsuario(String nome) {
-		Usuario user = new Usuario(nome);
+	public void cadastrarUsuario(String nome, int interesse, int curso) {
+		Usuario user = new Usuario(nome, interesse, curso);
 		users.add(user);
 	}
 
@@ -35,8 +35,14 @@ public class ControladorUser {
         try{
             System.out.println("\nQual o nome do usuário?");
             String nome = in.nextLine();
+            ListarCursos();
+            System.out.println("\nQual o curso do usuário?");
+            int curso = in.nextInt();
+            ListarCursos();
+            System.out.println("\nQual o curso de interesse do usuário?");
+            int interesse = in.nextInt();
+            cadastrarUsuario(nome, interesse, curso);
             System.out.println("Usuário Cadastrado com sucesso!\n");
-            cadastrarUsuario(nome);
         }catch(Exception e){
             System.out.println("Erro ao cadastrar usuário!");
         }
@@ -130,5 +136,25 @@ public class ControladorUser {
 
     public void pegarEmprestado(int id, Item item, int idItem){
         users.get(id).pegarEmprestado(item, idItem);
+    }
+
+    public void listarHistorico(int id){
+        for(int i = 0; i < users.get(id).getHistorico().size(); i++){
+            System.out.print("ID: " + i + ", ");
+            users.get(id).getHistorico().get(i).printItem();
+        }
+    }
+
+    public Usuario getUser(int id){
+        return users.get(id);
+    }
+
+    public void ListarCursos(){
+        System.out.println("1 - Engenharia");
+        System.out.println("2 - Software");
+        System.out.println("3 - Matemática");
+        System.out.println("4 - Física");
+        System.out.println("5 - Medicina");
+        System.out.println("6 - Outros");
     }
 }

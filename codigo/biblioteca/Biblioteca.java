@@ -21,28 +21,28 @@ public class Biblioteca {
         return item;
     }
 
-    public void addTeses(String Title, String Author, int Year, int Quantity) {
-        itens.add(new Tese(Title, Author, Year, Quantity));
+    public void addTeses(String Title, String Author, int Year, int Quantity, int categoria) {
+        itens.add(new Tese(Title, Author, Year, Quantity, categoria));
         System.out.println("\nTese cadastrada com sucesso!");
     }
 
-    public void addRevista(String Title, String Author, int Year, int Quantity) {
-        itens.add(new Revista(Title, Author, Year, Quantity));
+    public void addRevista(String Title, String Author, int Year, int Quantity, int categoria) {
+        itens.add(new Revista(Title, Author, Year, Quantity, categoria));
         System.out.println("\nRevista cadastrada com sucesso");
     }
 
-    public void addDVD(String Title, String Author, int Year, int Quantity) {
-        itens.add(new DVD(Title, Author, Year, Quantity, 0));
+    public void addDVD(String Title, String Author, int Year, int Quantity, int categoria) {
+        itens.add(new DVD(Title, Author, Year, Quantity, 0, categoria));
         System.out.println("\nDVD cadastrado com sucesso");
     }
 
-    public void addCD(String Title, String Author, int Year, int Quantity) {
-        itens.add(new CD(Title, Author, Year, Quantity, 0));
+    public void addCD(String Title, String Author, int Year, int Quantity, int categoria) {
+        itens.add(new CD(Title, Author, Year, Quantity, 0, categoria));
         System.out.println("\nCD Cadastrado com Sucesso!");
     }
 
-    public void addLivro(String Titulo, String Author, int Year, int Quantity) {
-        itens.add(new Livro(Titulo, Author, Year, Quantity, 0));
+    public void addLivro(String Titulo, String Author, int Year, int Quantity, int categoria) {
+        itens.add(new Livro(Titulo, Author, Year, Quantity, 0, categoria));
         System.out.println("\nLivro Cadastrado com Sucesso!");
     }
 
@@ -154,8 +154,12 @@ public class Biblioteca {
             System.out.println("Digite a quantidade de DVDs: ");
             int quantidade = in.nextInt();
 
+            ListarCategoria();
+            System.out.println("Qual a categoria do DVD?");
+            int categoria = in.nextInt();
+
             DVD item = (DVD) itens.get(id);
-            DVD dvd = new DVD(titulo, autor, ano, quantidade, item.getEmprestado());
+            DVD dvd = new DVD(titulo, autor, ano, quantidade, item.getEmprestado(), categoria);
 
             itens.set(id, dvd);
         } else if (itens.get(id) instanceof CD) {
@@ -171,8 +175,12 @@ public class Biblioteca {
             System.out.println("Digite a quantidade de CDs: ");
             int quantidade = in.nextInt();
 
+            ListarCategoria();
+            System.out.println("Qual a categoria do CD?");
+            int categoria = in.nextInt();
+
             CD item = (CD) itens.get(id);
-            CD cd = new CD(titulo, autor, ano, quantidade, item.getEmprestado());
+            CD cd = new CD(titulo, autor, ano, quantidade, item.getEmprestado(), categoria);
 
 
             itens.set(id, cd);
@@ -189,8 +197,12 @@ public class Biblioteca {
             System.out.println("Digite a quantidade de Livros: ");
             int quantidade = in.nextInt();
 
+            ListarCategoria();
+            System.out.println("Qual a categoria do Livro?");
+            int categoria = in.nextInt();
+
             Livro item = (Livro) itens.get(id);
-            Livro Livro = new Livro(titulo, autor, ano, quantidade, item.getEmprestado());
+            Livro Livro = new Livro(titulo, autor, ano, quantidade, item.getEmprestado(), categoria);
 
             itens.set(id, Livro);
         } else if (itens.get(id) instanceof Tese) {
@@ -206,7 +218,11 @@ public class Biblioteca {
             System.out.println("Digite a quantidade de Tese: ");
             int quantidade = in.nextInt();
 
-            Tese Tese = new Tese(titulo, autor, ano, quantidade);
+            ListarCategoria();
+            System.out.println("Qual a categoria da Tese?");
+            int categoria = in.nextInt();
+
+            Tese Tese = new Tese(titulo, autor, ano, quantidade, categoria);
             itens.set(id, Tese);
         } else if (itens.get(id) instanceof Revista) {
             System.out.println("Digite o Titulo do Revista: ");
@@ -221,8 +237,30 @@ public class Biblioteca {
             System.out.println("Digite a quantidade de Revistas: ");
             int quantidade = in.nextInt();
 
-            Revista Revista = new Revista(titulo, autor, ano, quantidade);
+            ListarCategoria();
+            System.out.println("Qual a categoria da Revista?");
+            int categoria = in.nextInt();
+
+            Revista Revista = new Revista(titulo, autor, ano, quantidade, categoria);
             itens.set(id, Revista);
         }
+    }
+
+    public void listarItensCategoria(int categoria) {
+        for (int i = 0; i < itens.size(); i++) {
+            if (itens.get(i).getCategoria() == categoria) {
+                System.out.print("ID: " + i + ", ");
+                itens.get(i).printItem();
+            }
+        }
+    }
+
+    public void ListarCategoria(){
+        System.out.println("1 - Engenharia");
+        System.out.println("2 - Software");
+        System.out.println("3 - Matemática");
+        System.out.println("4 - Física");
+        System.out.println("5 - Medicina");
+        System.out.println("6 - Outros");
     }
 }

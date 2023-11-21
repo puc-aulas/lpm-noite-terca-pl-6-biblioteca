@@ -1,14 +1,17 @@
+import java.util.Scanner;
+
 import biblioteca.Biblioteca;
 import biblioteca.Item;
 import biblioteca.RelatorioEmprestimo;
 import usuario.ControladorUser;
-import java.util.Scanner;
+import recomendacao.recomendacao;
 
 public class proj4 {
     private static final ControladorUser users = new ControladorUser();
     private static final Biblioteca bib = new Biblioteca();
     private static final Scanner in = new Scanner(System.in);
     private static final RelatorioEmprestimo rel = new RelatorioEmprestimo();
+    private static final recomendacao recom = new recomendacao();
 
     public static void main(String[] args) {
         int escolha;
@@ -220,6 +223,8 @@ public class proj4 {
             System.out.println("2 -- Remover Usuário");
             System.out.println("3 -- Atualizar Usuário");
             System.out.println("4 -- Listar Usuário");
+            System.out.println("5 -- Recommendação de itens");
+            System.out.println("6 -- Listar Historico");
             System.out.println("0 -- Voltar");
             try {
                 escolha = in.nextInt();
@@ -235,6 +240,12 @@ public class proj4 {
                         break;
                     case 4:
                         users.listarUsuarios();
+                        break;
+                    case 5:
+                        recomendarItem();
+                        break;
+                    case 6:
+                        listarHistorico();
                         break;
                     case 0:
                         break;
@@ -258,31 +269,83 @@ public class proj4 {
         bib.editarItem(escolha);
     }
 
-    public static void AddTests() {
-        bib.addTeses("As Sombras do Amanhã", "Cecília Meireles", 2021, 7);
-        bib.addTeses("Mares de Tempo", "Fabio", 2020, 6);
-        bib.addTeses("Ecos da Verdade", "Clarice", 2018, 5);
+    public static void listarHistorico() {
+        if (users.getSize() <= 0) {
+            System.out.println("Não há usuários cadastrados!");
+            return;
+        }
 
-        bib.addRevista("Ondas de Calmaria", "Machado de Assis", 2018, 4);
-        bib.addRevista("Reflexos do Futuro", "Lygia Fagundes Telles", 2020, 6);
-        bib.addRevista("Além das Estrelas", "Carlos Drummond de Andrade", 1968, 8);
+        users.listarUsuarios();
 
-        bib.addDVD("Sinfonia da Nova Era", "Manuel Bandeira", 1998, 7);
-        bib.addDVD("Fragmentos de Uma Vida", "Hilda Hilst", 2021, 10);
-        bib.addDVD("Labirintos da Memória", "Jorge Amado", 2009, 12);
+        try {
+            System.out.println("\nQual o ID do usuário?");
+            int idUser = in.nextInt();
 
-        bib.addCD("Sombras da Noite", "50 Pesos", 2007, 14);
-        bib.addCD("Espelhos Distantes", "Jay-A", 1996, 2);
-        bib.addCD("O Rio do Esquecimento", "Charlie Brown Sr.", 2000, 6);
+            users.listarHistorico(idUser);
+        } catch (Exception e) {
+            System.out.println("Opção inválida!");
+        }
+    }
 
-        bib.addLivro("Horizontes Perdidos", "Loki", 1552, 3);
-        bib.addLivro("O Voo da Serpente", "Odin", 1358, 3);
-        bib.addLivro("Véus do Amanhecer", "Thor", 859, 1);
+    public static void recomendarItem() {
+        if (users.getSize() <= 0) {
+            System.out.println("Não há usuários cadastrados!");
+            return;
+        }
+
+        users.listarUsuarios();
+
+        try {
+            System.out.println("\nQual o ID do usuário?");
+            int idUser = in.nextInt();
+
+            recom.recomendar(users.getUser(idUser), bib);
+            
+        } catch (Exception e) {
+            System.out.println("Opção inválida!");
+        }
+    }
+
+    public static void AddTests() {        
+        bib.addTeses("Tese 1", "Autor 1", 2020, 3, 1);  // Engenharia
+        bib.addTeses("Tese 2", "Autor 2", 2021, 2, 2);  // Software
+        bib.addTeses("Tese 3", "Autor 3", 2019, 4, 3);  // Matemática
+        bib.addTeses("Tese 4", "Autor 4", 2022, 1, 4);  // Física
+        bib.addTeses("Tese 5", "Autor 5", 2018, 5, 5);  // Medicina
+        bib.addTeses("Tese 6", "Autor 6", 2023, 2, 6);  // Outros
+
+        bib.addRevista("Revista 1", "Autor 1", 2019, 2, 1);  // Engenharia
+        bib.addRevista("Revista 2", "Autor 2", 2020, 3, 2);  // Software
+        bib.addRevista("Revista 3", "Autor 3", 2021, 1, 3);  // Matemática
+        bib.addRevista("Revista 4", "Autor 4", 2022, 4, 4);  // Física
+        bib.addRevista("Revista 5", "Autor 5", 2023, 2, 5);  // Medicina
+        bib.addRevista("Revista 6", "Autor 6", 2018, 3, 6);  // Outros
+
+        bib.addDVD("DVD 1", "Autor 1", 2020, 1, 1);  // Engenharia
+        bib.addDVD("DVD 2", "Autor 2", 2019, 2, 2);  // Software
+        bib.addDVD("DVD 3", "Autor 3", 2021, 3, 3);  // Matemática
+        bib.addDVD("DVD 4", "Autor 4", 2018, 4, 4);  // Física
+        bib.addDVD("DVD 5", "Autor 5", 2022, 2, 5);  // Medicina
+        bib.addDVD("DVD 6", "Autor 6", 2023, 1, 6);  // Outros
+
+        bib.addCD("CD 1", "Autor 1", 2022, 3, 1);  // Engenharia
+        bib.addCD("CD 2", "Autor 2", 2020, 2, 2);  // Software
+        bib.addCD("CD 3", "Autor 3", 2019, 1, 3);  // Matemática
+        bib.addCD("CD 4", "Autor 4", 2021, 4, 4);  // Física
+        bib.addCD("CD 5", "Autor 5", 2018, 2, 5);  // Medicina
+        bib.addCD("CD 6", "Autor 6", 2023, 5, 6);  // Outros
+
+        bib.addLivro("Livro 1", "Autor 1", 2019, 4, 1);  // Engenharia
+        bib.addLivro("Livro 2", "Autor 2", 2020, 3, 2);  // Software
+        bib.addLivro("Livro 3", "Autor 3", 2021, 2, 3);  // Matemática
+        bib.addLivro("Livro 4", "Autor 4", 2018, 1, 4);  // Física
+        bib.addLivro("Livro 5", "Autor 5", 2022, 5, 5);  // Medicina
+        bib.addLivro("Livro 6", "Autor 6", 2023, 2, 6);  // Outros
     }
 
     public static void AddTestsUser() {
-        users.cadastrarUsuario("Marcos");
-        users.cadastrarUsuario("Maria");
-        users.cadastrarUsuario("Luiz");
+        users.cadastrarUsuario("Marcos", 1 , 1);
+        users.cadastrarUsuario("Maria", 1, 2);
+        users.cadastrarUsuario("Luiz", 4, 3);
     }
 }
