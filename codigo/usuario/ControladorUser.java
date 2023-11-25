@@ -41,6 +41,8 @@ public class ControladorUser {
             ListarCursos();
             System.out.println("\nQual o curso de interesse do usuário?");
             int interesse = in.nextInt();
+            if(interesse == 6) interesse = 0; // Converter interesse de 6 para 0, para registrar como Outros.
+            if(curso == 6) curso = 0; // Converter curso de 6 para 0, para registrar como Outros.
             cadastrarUsuario(nome, interesse, curso);
             System.out.println("Usuário Cadastrado com sucesso!\n");
         }catch(Exception e){
