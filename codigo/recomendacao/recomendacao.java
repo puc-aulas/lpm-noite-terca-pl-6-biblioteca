@@ -1,4 +1,4 @@
-package recomendacao;
+  package recomendacao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +56,8 @@ public class recomendacao {
             }else{
                 biblioteca.listarItensCategoria(ordemDeRecomendacao.get(i));
             }
+
+            if(i == 2) break; //Listar somente 3 dos itens recomendados.
         }
     }
 
