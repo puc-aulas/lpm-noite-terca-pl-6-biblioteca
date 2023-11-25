@@ -30,8 +30,8 @@ public class recomendacao {
             }
         }
 
-        CategoriaInteresse[user.getInteresse()] += 10; //Aumenta o peso na area de interesse por 10
-        CategoriaInteresse[user.getCurso()] += 5; //Aumenta o peso na area do curso por 5
+        CategoriaInteresse[user.getInteresse()] += 3; //Aumenta o peso na area de interesse por 3
+        CategoriaInteresse[user.getCurso()] += 2; //Aumenta o peso na area do curso por 2
 
         //Listar categoria com os seus pesos
         System.out.println("\nCategorias com seus pesos: ");
