@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 import biblioteca.Item;
 
 public class ControladorUser {
@@ -29,24 +31,23 @@ public class ControladorUser {
         }
     }
 
-    public void cadastrarUser() {
-		Scanner in = new Scanner(System.in);
-        
+    public void cadastrarUser() {        
         try{
-            System.out.println("\nQual o nome do usuário?");
-            String nome = in.nextLine();
+            String nome = JOptionPane.showInputDialog("Qual o nome do usuário?");
             ListarCursos();
-            System.out.println("\nQual o curso do usuário?");
-            int curso = in.nextInt();
+
+            int curso = Integer.parseInt(JOptionPane.showInputDialog("Qual o curso do usuário?"));
             ListarCursos();
-            System.out.println("\nQual o curso de interesse do usuário?");
-            int interesse = in.nextInt();
+
+            int interesse = Integer.parseInt(JOptionPane.showInputDialog("Qual o curso de interesse do usuário?"));
             if(interesse == 6) interesse = 0; // Converter interesse de 6 para 0, para registrar como Outros.
             if(curso == 6) curso = 0; // Converter curso de 6 para 0, para registrar como Outros.
+
             cadastrarUsuario(nome, interesse, curso);
-            System.out.println("Usuário Cadastrado com sucesso!\n");
+
+            JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
         }catch(Exception e){
-            System.out.println("Erro ao cadastrar usuário!");
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar usuário!");
         }
 		
 	}

@@ -15,11 +15,14 @@ public class proj4GUI extends JFrame {
     private static final RelatorioEmprestimo rel = new RelatorioEmprestimo();
     private static final recomendacao recom = new recomendacao();
 
+    private JTextArea itemListTextArea; // Add this line
+
     public proj4GUI() {
         super("Biblioteca");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 300);
+        setSize(600, 500);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+
 
         JButton pesquisarItensButton = new JButton("Pesquisar itens");
         JButton gerenciarUsuariosButton = new JButton("Gerenciar usuários");
@@ -35,7 +38,7 @@ public class proj4GUI extends JFrame {
         editarItensButton.addActionListener(e -> editarItem());
         emprestarButton.addActionListener(e -> emprestar());
         devolverButton.addActionListener(e -> devolver());
-        listarItensButton.addActionListener(e -> bib.listarItems());
+        listarItensButton.addActionListener(e -> bib.listarItems(itemListTextArea));
         relatorioButton.addActionListener(e -> rel.printRelatorio());
         sairButton.addActionListener(e -> System.exit(0));
 
@@ -49,6 +52,11 @@ public class proj4GUI extends JFrame {
         add(sairButton);
 
         setVisible(true);
+
+        itemListTextArea = new JTextArea();
+        itemListTextArea.setEditable(false); // Make it non-editable
+        JScrollPane scrollPane = new JScrollPane(itemListTextArea);
+        add(scrollPane);
     }
 
    private void pesquisarItens() {
@@ -66,18 +74,21 @@ public class proj4GUI extends JFrame {
             switch (escolha) {
                 case 1:
                     busca = validaString("Qual o título da obra?");
-                    JOptionPane.showMessageDialog(this, "Melhores resultados para a busca " + busca);
-                    bib.listarTitulo(busca);
+                    itemListTextArea.setText("");
+                    itemListTextArea.append("Melhores resultados para a busca por título " + busca + "\n");
+                    bib.listarTitulo(busca,itemListTextArea);
                     break;
                 case 2:
                     busca = validaString("Qual o autor da obra?");
-                    JOptionPane.showMessageDialog(this, "Melhores resultados para a busca \"" + busca + "\"\n");
-                    bib.listarAutor(busca);
+                    itemListTextArea.setText("");
+                    itemListTextArea.append("Melhores resultados para a busca por autor " + busca + "\n");
+                    bib.listarAutor(busca,itemListTextArea);
                     break;
                 case 3:
                     int ano = validaAnoDaObra("Digite o ano de publicação:");
-                    JOptionPane.showMessageDialog(this, "Obras do ano: \"" + ano + "\"\n");
-                    bib.listarAno(ano);
+                    itemListTextArea.setText("");
+                     itemListTextArea.append("Obras do ano: \"" + ano + "\"\n");
+                    bib.listarAno(ano,itemListTextArea);
                     break;
                 case 0:
                     return;
@@ -187,7 +198,7 @@ public class proj4GUI extends JFrame {
 }
 
    private void editarItem() {
-      bib.listarItems();
+      bib.listarItems(itemListTextArea);
       try {
           int escolha = Integer.parseInt(JOptionPane.showInputDialog("Digite o ID do item que deseja editar: "));
           bib.editarItem(escolha);
@@ -203,7 +214,7 @@ public class proj4GUI extends JFrame {
         }
 
         do {
-            bib.listarEmprestavel();
+            bib.listarEmprestavel(itemListTextArea);
             try {
                 int id = Integer.parseInt(JOptionPane.showInputDialog("Qual o ID do item?"));
                 int emprestavel = bib.emprestavel(id);

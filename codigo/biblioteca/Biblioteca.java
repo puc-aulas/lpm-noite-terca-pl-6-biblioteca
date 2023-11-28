@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.JTextArea;
+
 import static java.util.Comparator.comparing;
 
 public class Biblioteca {
@@ -46,10 +48,10 @@ public class Biblioteca {
         System.out.println("\nLivro Cadastrado com Sucesso!");
     }
 
-    public void listarItems() {
+    public void listarItems(JTextArea textArea) {
         for (int i = 0; i < itens.size(); i++) {
             System.out.print("ID: " + i + ", ");
-            itens.get(i).printItem();
+            itens.get(i).printItem(textArea);
         }
     }
 
@@ -58,7 +60,7 @@ public class Biblioteca {
     }
 
     // Ordenar os Items pelo titulo
-    public void listarTitulo(String busca) {
+    public void listarTitulo(String busca,JTextArea textArea) {
         List<Item> result = new ArrayList<>();
 
         for (Item a : itens) {
@@ -70,11 +72,11 @@ public class Biblioteca {
         result.sort(comparing(Item::getTitulo));
 
         for (Item item : result) {
-            item.printItem();
+            item.printItem(textArea);
         }
     }
 
-    public void listarAutor(String busca) {
+    public void listarAutor(String busca,JTextArea textArea) {
         List<Item> result = new ArrayList<>();
 
         for (Item a : itens) {
@@ -86,12 +88,12 @@ public class Biblioteca {
         result.sort(comparing(Item::getTitulo));
 
         for (Item item : result) {
-            item.printItem();
+            item.printItem(textArea);
         }
     }
 
     // Ordenar os Items pelo Ano
-    public void listarAno(int ano) {
+    public void listarAno(int ano,JTextArea textArea) {
         List<Item> result = new ArrayList<>();
 
         for (Item a : itens) {
@@ -102,21 +104,21 @@ public class Biblioteca {
         result.sort(comparing(Item::getTitulo));
 
         for (Item item : result) {
-            item.printItem();
+            item.printItem(textArea);
         }
     }
 
-    public void listarEmprestavel() {
+    public void listarEmprestavel(JTextArea textArea) {
         for (int i = 0; i < itens.size(); i++) {
             if (itens.get(i) instanceof DVD) {
                 System.out.print("ID: " + i + ", ");
-                itens.get(i).printItem();
+                itens.get(i).printItem(textArea);
             } else if (itens.get(i) instanceof CD) {
                 System.out.print("ID: " + i + ", ");
-                itens.get(i).printItem();
+                itens.get(i).printItem(textArea);
             } else if (itens.get(i) instanceof Livro) {
                 System.out.print("ID: " + i + ", ");
-                itens.get(i).printItem();
+                itens.get(i).printItem(textArea);
             }
         }
     }
@@ -246,11 +248,11 @@ public class Biblioteca {
         }
     }
 
-    public void listarItensCategoria(int categoria) {
+    public void listarItensCategoria(int categoria,JTextArea textArea) {
         for (int i = 0; i < itens.size(); i++) {
             if (itens.get(i).getCategoria() == categoria) {
                 System.out.print("ID: " + i + ", ");
-                itens.get(i).printItem();
+                itens.get(i).printItem(textArea);
             }
         }
     }

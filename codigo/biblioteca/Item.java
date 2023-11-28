@@ -1,5 +1,7 @@
 package biblioteca;
 
+import javax.swing.JTextArea;
+
 public class Item {
 	String titulo;
 	String autor;
@@ -78,10 +80,10 @@ public class Item {
 		this.categoria = categoria;
 	}
 
-	public void printItem() {
-		System.out.println("Titulo: " + this.titulo + ", Autor: " + this.autor + ", Ano: " + this.ano
-				+ ", Tipo: " + this.tipo + ", Quantidade: " + this.quantidade + ", Categoria: " + CategoriaName(this.categoria));
-	}
+	public void printItem(JTextArea textArea) {
+		textArea.append("Titulo: " + this.titulo + ", Autor: " + this.autor + ", Ano: " + this.ano
+		+ ", Tipo: " + this.tipo + ", Quantidade: " + this.quantidade + ", Categoria: " + CategoriaName(this.categoria) + "\n");
+}
 
 	public String CategoriaName(int id){
 		switch(id){
